@@ -1,29 +1,25 @@
-// Q6: Parallel Sections Example
-#include <iostream>
+// Q6: Parallel Sections Example in C
+#include <stdio.h>
 #include <omp.h>
-using namespace std;
 
 int main() {
-    cout << "--- Parallel Sections Example ---" << endl;
+    printf("--- Parallel Sections Example ---\n");
 
     #pragma omp parallel sections
     {
         #pragma omp section
         {
-            cout << "Section 1 executed by Thread: "
-                 << omp_get_thread_num() << endl;
+            printf("Section 1 executed by Thread: %d\n", omp_get_thread_num());
         }
 
         #pragma omp section
         {
-            cout << "Section 2 executed by Thread: "
-                 << omp_get_thread_num() << endl;
+            printf("Section 2 executed by Thread: %d\n", omp_get_thread_num());
         }
 
         #pragma omp section
         {
-            cout << "Section 3 executed by Thread: "
-                 << omp_get_thread_num() << endl;
+            printf("Section 3 executed by Thread: %d\n", omp_get_thread_num());
         }
     }
 
