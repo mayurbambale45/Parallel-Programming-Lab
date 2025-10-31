@@ -2,39 +2,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
+#include <math.h> // <-- Add this for sin/cos
 
 #define N 10000000
 
 int main() {
     double *A, *B;
-    double dot_product_serial = 0.0, dot_product_parallel = 0.0;
+    double result_serial = 0.0, result_parallel = 0.0;
     int i;
 
     A = (double*)malloc(N * sizeof(double));
     B = (double*)malloc(N * sizeof(double));
 
+    // Initialize with different values for sin/cos to prevent
+    // the compiler from optimizing everything away
     for (i = 0; i < N; i++) {
-        A[i] = i * 1.0;
-        B[i] = i * 2.0;
+        A[i] = i * 0.0001;
+        B[i] = i * 0.0002;
     }
 
-    printf("--- Serial Vector Dot Product ---\n");
+    printf("--- Serial Heavy Computation ---\n");
     double start_serial = omp_get_wtime();
     for (i = 0; i < N; i++) {
-        dot_product_serial += A[i] * B[i];
+        // Make the work "harder" (compute-bound)
+        result_serial += sin(A[i]) * cos(B[i]);
     }
     double end_serial = omp_get_wtime();
-    printf("Dot Product: %e\n", dot_product_serial);
+    printf("Result: %e\n", result_serial);
     printf("Time taken: %f seconds\n", end_serial - start_serial);
 
-    printf("\n--- Parallel Vector Dot Product ---\n");
+    printf("\n--- Parallel Heavy Computation ---\n");
     double start_parallel = omp_get_wtime();
-    #pragma omp parallel for reduction(+:dot_product_parallel)
+    
+    // The pragma is the same and is correct
+    #pragma omp parallel for reduction(+:result_parallel)
     for (i = 0; i < N; i++) {
-        dot_product_parallel += A[i] * B[i];
+        // Make the work "harder" (compute-bound)
+        result_parallel += sin(A[i]) * cos(B[i]);
     }
     double end_parallel = omp_get_wtime();
-    printf("Dot Product: %e\n", dot_product_parallel);
+    printf("Result: %e\n", result_parallel);
     printf("Time taken: %f seconds\n", end_parallel - start_parallel);
 
     free(A);
@@ -42,3 +49,6 @@ int main() {
 
     return 0;
 }
+
+// gcc -fopenmp code2.c -o a && ./a
+// gcc -O3 -fopenmp code2.c -o a -lm && ./a

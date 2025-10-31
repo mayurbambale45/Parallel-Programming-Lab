@@ -34,5 +34,5 @@ int main(int argc, char** argv){
     return 0;
 }
 
-// run command: mpic++ mpi_2.c -o a && mpirun -np 2 ./a
+// Run: mpic++ mpi_2.c -o a && mpirun -np 2 ./a
 // Source: https://github.com/kaityo256/deadlock
