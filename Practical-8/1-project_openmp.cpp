@@ -8,6 +8,7 @@
 
 using namespace std;
 
+
 void simpleMerge(vector<int>& arr, int l, int m, int r) {
     int n1 = m - l + 1;
     int n2 = r - m;
@@ -68,16 +69,15 @@ int main(int argc, char** argv) {
     vector<int> serial_copy = global_data;
     printf("------------------------------------------------------\n");
     printf("STARTING SERIAL SORT on all %d numbers...\n", total_N);
-
     serial_start_time = omp_get_wtime();
     mergeSort(serial_copy, 0, total_N - 1);
     serial_end_time = omp_get_wtime();
     serial_time = serial_end_time - serial_start_time;
-    
     printf("Serial Time: %f seconds.\n", serial_time);
     printf("------------------------------------------------------\n\n");
     
     printf("STARTING PARALLEL SORT now.\n\n");
+
 
     vector<int> parallel_copy = global_data;
     vector<vector<int>> thread_chunks; 
@@ -137,4 +137,4 @@ int main(int argc, char** argv) {
 }
 
 // /mnt/d/College_Work/SEM-V/PP_Lab/Parallel-Programming-Lab/Practical-8
-// g++ 1-project_openmp.cpp -o b -fopenmp -std=c++11 && export OMP_NUM_THREADS=10 && ./b
+// g++ 1-project_openmp.cpp -o a -fopenmp -std=c++11 && OMP_NUM_THREADS=10 ./a

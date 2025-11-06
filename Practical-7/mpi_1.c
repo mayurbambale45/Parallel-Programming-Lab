@@ -17,5 +17,5 @@ int main(int argc, char** argv){
 }
 
 
-// Run:- mpic++ mpi_1.c -o a && mpirun --oversubscribe -np 10 ./a
+
 // Source: https://curc.readthedocs.io/en/latest/programming/MPI-C.html#setup-and-hello-world

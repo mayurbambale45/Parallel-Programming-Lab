@@ -57,5 +57,5 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-// Run:  mpic++ -o a mpi_3.c && mpirun -np 4 ./a
+// Run:  mpic++ -o a mpi_4.c && mpirun -np 4 ./a
 // Source: https://stackoverflow.com/questions/16162796/write-mpi-program-sum-in-a-the-array-with-two-process
